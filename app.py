@@ -22,11 +22,16 @@ page_num = 1
 def find_site():
     global page_num
     x=0
+    time.sleep(1)
     lien_click = driver.find_elements(By.CLASS_NAME, 'thumbnail.border-thumbnail.shadow-thumbnail')
     for lien in lien_click:
         new = driver.find_elements(By.CLASS_NAME, 'thumbnail.border-thumbnail.shadow-thumbnail')
-        time.sleep(1)
-        new[x].click()
+        #print(new[0])
+        try:
+            new[x].click()
+        except:
+            print(x)
+            
         try:
             attachement_file = driver.find_element(By.CLASS_NAME, 'button-download-attachment-file').text
         except:
@@ -43,20 +48,19 @@ def find_site():
         x = x+1
         # -- si il a parcouru tous les articles
         if (x == len(new)): 
-            if len(new) > 11:
-                change_page(page_num)
-                page_num = page_num+1
-                find_site()
+            change_page(page_num)
         tab.append(data)
-      
         
     return tab
 
-def change_page(number_clicks):
-    for nb in number_clicks:
+def change_page(number_clicks = 0):
+    global page_num
+    for i in range(0, number_clicks):
         btn = driver.find_element(By.CLASS_NAME, 'js-next-page.next-page')
         btn.click()
         time.sleep(1)
+        page_num = page_num +1
+        find_site()
     
         
 print(find_site())
