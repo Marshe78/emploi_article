@@ -1,6 +1,6 @@
 # pip install selenium
 # need chrome driver executable in folder
-# pip install mysql.connector
+
 import time
 from types import new_class
 from selenium import webdriver
@@ -69,9 +69,6 @@ def find_site():
             driver.back()
             time.sleep(2)
             x = x+1
-            print(x)
-            print(len(new))
-            print('-----')
             # -- si il a parcouru tous les articles
             if (x == len(new)):
                 # 2 correspond au nombre de pages
@@ -85,11 +82,10 @@ def find_site():
             # il a passer la 1ere page et est revenu à la page 1 (il doit retourner à sa page)
             elif page_num > 1:
                 change_page(page_num)
-
             tab.append(data)
             Database.addRowEmploi(data)
         except:
-            print("fin du script")
+            print("Erreur")
     return tab
 
 

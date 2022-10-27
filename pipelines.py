@@ -54,8 +54,7 @@ class Database:
             database="emploi"
         )
         mycursor = mydb.cursor()
-        sql = "INSERT INTO article (title, attachement_file, img, date) VALUES ( %s, %s, %s, %s, %s, %s)"
-        val = (item['title'], item['attachement_file'],
-               item['img'], item['date'])
+        sql = "INSERT INTO article (title, attachement_file, img, date) VALUES (%s, %s, %s, %s)"
+        val = (item['title'], item['attachement_file'], item['img'], item['date'])
         mycursor.execute(sql, val)
         mydb.commit()
