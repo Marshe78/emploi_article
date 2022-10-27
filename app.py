@@ -1,5 +1,6 @@
 # pip install selenium
 # need chrome driver executable in folder
+# pip install mysql.connector
 import time
 from types import new_class
 from selenium import webdriver
@@ -86,8 +87,9 @@ def find_site():
                 change_page(page_num)
 
             tab.append(data)
+            Database.addRowEmploi(data)
         except:
-            print("Erreur")
+            print("fin du script")
     return tab
 
 
