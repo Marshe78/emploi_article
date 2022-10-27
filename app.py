@@ -2,12 +2,12 @@
 # need chrome driver executable in folder
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from pipelines import Database
 
 #Ouvre la fenetre
 DRIVER_PATH = './chromedriver'
 driver = webdriver.Chrome(DRIVER_PATH)
 
-# 
 #BASE_URL = 'https://jobencomminges.fr/articles'
 BASE_URL = 'https://www.c-chartrespourlemploi.fr/articles'
 #BASE_URL = 'https://angers-emploi.fr/articles'
@@ -20,6 +20,8 @@ data ={}
 tab = []
 page_num = 1
 def find_site():
+    Database.connectDb()
+    Database.createTable()
     global page_num
     x=0
     time.sleep(1)
@@ -27,10 +29,12 @@ def find_site():
     for lien in lien_click:
         new = driver.find_elements(By.CLASS_NAME, 'thumbnail.border-thumbnail.shadow-thumbnail')
         #print(new[0])
+        time.sleep(1)
         try:
             new[x].click()
+            time.sleep(1)
         except:
-            print(x)
+            print('ERROOOORRRR')
             
         try:
             attachement_file = driver.find_element(By.CLASS_NAME, 'button-download-attachment-file').text
@@ -50,7 +54,8 @@ def find_site():
         if (x == len(new)): 
             change_page(page_num)
         tab.append(data)
-        
+        Database.addRow(data)
+       
     return tab
 
 def change_page(number_clicks = 0):
