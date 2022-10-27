@@ -28,21 +28,19 @@ def find_site():
     lien_click = driver.find_elements(
         By.CLASS_NAME, 'thumbnail.border-thumbnail.shadow-thumbnail')
     for lien in lien_click:
-        time.sleep(1)
-        new = driver.find_elements(
-            By.CLASS_NAME, 'thumbnail.border-thumbnail.shadow-thumbnail')
-        time.sleep(1)
+        time.sleep(2)
         try:
             page_max = driver.find_elements(
                 By.CLASS_NAME, 'js-page')
-            page_max = page_max[0].text
+            page_max = page_max[-1].text
             print(page_max)
         except:
             print("page_max, NAN")
-
+        time.sleep(2)
         try:
+            new = driver.find_elements(
+                By.CLASS_NAME, 'thumbnail.border-thumbnail.shadow-thumbnail')
             new[x].click()
-            time.sleep(1)
             try:
                 attachement_file = driver.find_element(
                     By.CLASS_NAME, 'button-download-attachment-file').text
@@ -73,7 +71,7 @@ def find_site():
             print(x)
             # -- si il a parcouru tous les articles
             if (x == len(new)):
-                if(page_num < page_max):
+                if(page_num <= page_max):
                     print('change page')
                     change_page(page_num)
                 else:
